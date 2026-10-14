@@ -1451,8 +1451,8 @@ footer.footer {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--primary);
-  margin-bottom: 0.4rem;
-  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
 }
 
 .tv-available {
