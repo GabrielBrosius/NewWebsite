@@ -720,6 +720,20 @@ nav.fixed-nav.scrolled {
   line-height: 1.6;
 }
 
+.theater-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary);
+  transition: color 0.2s ease;
+}
+
+.theater-link:hover {
+  color: var(--primary-hover);
+}
+
 /* Recognition/Awards Section */
 .awards-list {
   display: flex;
