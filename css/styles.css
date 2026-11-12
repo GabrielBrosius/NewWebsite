@@ -298,11 +298,29 @@ nav.fixed-nav.scrolled {
 }
 
 .hero-bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
   transform: scale(1.12);
+}
+
+/* Rotating hero photos */
+.hero-slide {
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transition: none;
+  }
 }
 
 .hero-content {
@@ -553,8 +571,7 @@ nav.fixed-nav.scrolled {
 .tv-grid {
   display: grid;
   grid-template-columns: 1fr;
-  background-color: hsl(0, 0%, 10%);
-  gap: 1px;
+  gap: 0;
 }
 
 @media (min-width: 768px) {
@@ -563,50 +580,45 @@ nav.fixed-nav.scrolled {
   }
 }
 
-/* Center grids with fewer than 3 cards */
-.tv-grid--center {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  background-color: black;
-}
-
-.tv-grid--center .tv-card {
-  flex: 0 0 100%;
-}
-
-@media (min-width: 768px) {
-  .tv-grid--center .tv-card {
-    flex: 0 0 50%;
-    border-right: 1px solid hsl(0, 0%, 10%);
-  }
-
-  .tv-grid--center .tv-card:last-child {
-    border-right: none;
-  }
-}
-
-/* Single card — one third width */
-.tv-grid--single .tv-card {
-  flex: 0 0 100%;
-}
-
-@media (min-width: 768px) {
-  .tv-grid--single .tv-card {
-    flex: 0 0 33.333%;
-    border-right: none;
-  }
-}
-
+/* Cards sit directly on the section background, divided by thin lines */
 .tv-card {
-  background-color: black;
-  padding: 2.5rem 2rem;
+  background: transparent;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
 }
 
-@media (min-width: 1024px) {
-  .tv-card {
-    padding: 3rem 2.5rem;
+.tv-card:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .tv-card,
+  .tv-card:first-child {
+    padding: 0 2.5rem;
+    border-top: none;
+    border-left: 1px solid var(--border);
   }
+
+  .tv-card:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .tv-card:last-child {
+    padding-right: 0;
+  }
+}
+
+/* Single card (feature film) */
+.tv-grid--single {
+  grid-template-columns: 1fr;
+}
+
+.tv-grid--single .tv-card {
+  padding: 0;
+  border: none;
+  max-width: 44rem;
 }
 
 .tv-meta {
@@ -1354,6 +1366,11 @@ footer.footer {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
+  transition: opacity 0.4s ease;
+}
+
+.hero-image-credit.is-changing {
+  opacity: 0;
 }
 
 .hero-image-credit a {
@@ -1597,27 +1614,3 @@ footer.footer {
   opacity: 0.7;
 }
 
-/* Two-card centered grid — no grey sides */
-.tv-grid--pair {
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  gap: 0;
-}
-
-.tv-grid--pair .tv-card {
-  flex: 0 0 100%;
-  border-bottom: 1px solid hsl(0, 0%, 10%);
-}
-
-@media (min-width: 768px) {
-  .tv-grid--pair .tv-card {
-    flex: 0 0 33.333%;
-    border-bottom: none;
-    border-right: 1px solid hsl(0, 0%, 10%);
-  }
-
-  .tv-grid--pair .tv-card:last-child {
-    border-right: none;
-  }
-}

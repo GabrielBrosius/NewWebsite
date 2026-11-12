@@ -59,6 +59,51 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => el.classList.add('revealed'));
   }
 
+  // --- HERO PHOTO ROTATION ---
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  const heroCredit = document.querySelector('.hero-image-credit');
+  const heroCreditLink = heroCredit ? heroCredit.querySelector('a') : null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (heroSlides.length > 1 && heroCreditLink && !reduceMotion) {
+    let current = 0;
+    let heroTimer = null;
+
+    const showSlide = (next) => {
+      heroSlides[current].classList.remove('active');
+      heroSlides[next].classList.add('active');
+      current = next;
+
+      // Swap the "From ___" credit with a quick fade
+      heroCredit.classList.add('is-changing');
+      setTimeout(() => {
+        const slide = heroSlides[current];
+        heroCreditLink.setAttribute('href', slide.dataset.href);
+        heroCreditLink.innerHTML = '';
+        heroCreditLink.append('From ');
+        const em = document.createElement('em');
+        em.textContent = slide.dataset.title;
+        heroCreditLink.append(em);
+        heroCredit.classList.remove('is-changing');
+      }, 400);
+    };
+
+    const startRotation = () => {
+      if (heroTimer === null) {
+        heroTimer = setInterval(() => showSlide((current + 1) % heroSlides.length), 6500);
+      }
+    };
+    const stopRotation = () => {
+      clearInterval(heroTimer);
+      heroTimer = null;
+    };
+
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? stopRotation() : startRotation();
+    });
+    startRotation();
+  }
+
   // --- SCROLL SPY (ACTIVE NAV LINKS) ---
   const sections = document.querySelectorAll('section[id]');
   const desktopLinks = document.querySelectorAll('.nav-links .nav-link');
