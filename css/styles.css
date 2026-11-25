@@ -1366,6 +1366,11 @@ footer.footer {
   transform: translateX(0);
 }
 
+/* Keep the slide-in animation from widening the page on phones */
+.contact-section {
+  overflow-x: clip;
+}
+
 /* ==========================================================================
    ADDITIONS
    ========================================================================== */
