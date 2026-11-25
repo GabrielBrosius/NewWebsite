@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startRotation = () => {
       if (heroTimer === null) {
-        heroTimer = setInterval(() => showSlide((current + 1) % heroSlides.length), 6500);
+        heroTimer = setInterval(() => showSlide((current + 1) % heroSlides.length), 3500);
       }
     };
     const stopRotation = () => {
